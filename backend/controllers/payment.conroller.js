@@ -118,7 +118,7 @@ const allPayments=async(req,res,next)=>{
         });
     
         res.status(200).json({
-            succsess:true,
+            success:true,
             message:"All payments",
             subscription
         })

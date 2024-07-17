@@ -41,5 +41,5 @@ router
 
   router.route("/:courseId/:lectureId")
          .put(isLoggedIn,authorizedRoles('ADMIN'),editLectureByCourseIdAndLectureId)
-
+         .delete(isLoggedIn,authorizedRoles('ADMIN'),removeLectureFromCourse)
 export default router;

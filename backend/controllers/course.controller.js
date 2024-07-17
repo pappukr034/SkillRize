@@ -147,7 +147,7 @@ export const addLectureToCourseById = asyncHandler(async (req, res, next) => {
     try {
       const result = await cloudinary.v2.uploader.upload(req.file.path, {
         folder: 'lms', // Save files in a folder named lms
-        chunk_size: 50000000, // 50 mb size
+        chunk_size: 100000000, // 50 mb size
         resource_type: 'video',
       });
 
@@ -196,14 +196,15 @@ export const addLectureToCourseById = asyncHandler(async (req, res, next) => {
 
 /**
  * @Remove_LECTURE
- * @ROUTE @DELETE {{URL}}/api/v1/courses/:courseId/lectures/:lectureId
+ * @ROUTE @DELETE {{URL}}/api/v1/courses/:courseId/:lectureId
  * @ACCESS Private (Admin only)
  */
 export const removeLectureFromCourse = asyncHandler(async (req, res, next) => {
   // Grabbing the courseId and lectureId from req.query
-  const { courseId, lectureId } = req.query;
+  const { courseId, lectureId } = req.params;
 
-  console.log(courseId);
+  console.log("Course ID",courseId);
+  console.log("Lecture ID",lectureId);
 
   // Checking if both courseId and lectureId are present
   if (!courseId) {
@@ -332,7 +333,7 @@ export const deleteCourseById = asyncHandler(async (req, res, next) => {
 });
 
 export const editLectureByCourseIdAndLectureId=asyncHandler(async(req,res,next)=>{
-         // Grabbing the courseId and lectureId from req.query
+         // Grabbing the courseId and lectureId from req.params
       const { courseId, lectureId } = req.params;
 
       const {title,description,lecture}=req.body;
@@ -349,7 +350,6 @@ export const editLectureByCourseIdAndLectureId=asyncHandler(async(req,res,next)=
         description
      }
 
-      console.log(courseId);
 
       // Checking if both courseId and lectureId are present
       if (!courseId) {
@@ -382,7 +382,7 @@ export const editLectureByCourseIdAndLectureId=asyncHandler(async(req,res,next)=
         try {
           const result = await cloudinary.v2.uploader.upload(req.file.path, {
             folder: 'lms', // Save files in a folder named lms
-            chunk_size: 50000000, // 50 mb size
+            chunk_size: 50000000, // 100 mb size
             resource_type: 'video',
           });
     
@@ -414,9 +414,9 @@ export const editLectureByCourseIdAndLectureId=asyncHandler(async(req,res,next)=
       
 
       course.lectures[lectureIndex]={
-        ...lectureData,
         title,
-        description
+        description,
+        lecture:lectureData.lecture
       }
 
       console.log("Updated Lecture :",course.lectures[lectureIndex])
