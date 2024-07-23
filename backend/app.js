@@ -15,10 +15,12 @@ const app=express();
 
 // Basi configuration
 app.use(express.json())
+
 app.use(cors({
-    credentials: true, 
-    origin:[process.env.FRONTEND_URL],
-}))
+  origin:'http://localhost:5173',
+  credentials:true
+}));
+  
 
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
